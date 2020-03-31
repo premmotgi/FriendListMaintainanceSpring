@@ -1,10 +1,8 @@
 package com.devopstest;
 
-import com.devopstest.controller.FriendController;
-import com.devopstest.controller.GreetingController;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 
@@ -13,6 +11,11 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 public class DevopsTestApplication extends SpringBootServletInitializer{
 
 
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(DevopsTestApplication.class);
+	}
+	
 	public static void main(String[] args) {
 		SpringApplication.run(DevopsTestApplication.class, args);
 
