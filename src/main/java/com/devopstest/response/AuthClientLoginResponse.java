@@ -1,8 +1,12 @@
 package com.devopstest.response;
 
+import com.couchbase.client.deps.com.fasterxml.jackson.annotation.JsonInclude;
+
 public class AuthClientLoginResponse {
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     String id, jwt, message;
+
 
     public AuthClientLoginResponse(String id, String jwt, String message) {
         this.id = id;
@@ -13,9 +17,9 @@ public class AuthClientLoginResponse {
     @Override
     public String toString() {
         return "AuthClientLoginFalseResponse{" +
-                "status='" + id + '\'' +
-                ", errorId='" + jwt + '\'' +
-                ", errorMessage='" + message + '\'' +
+                "id='" + id + '\'' +
+                ", jwt='" + jwt + '\'' +
+                ", message='" + message + '\'' +
                 '}';
     }
 

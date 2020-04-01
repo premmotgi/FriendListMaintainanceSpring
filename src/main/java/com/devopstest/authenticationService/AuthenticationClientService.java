@@ -24,7 +24,7 @@ public class AuthenticationClientService {
 
         LOGGER.info("Client Authentication Started with request body"+requestBody);
 
-        final String uri = "http://localhost:8080/register/";
+        final String uri = "http://localhost:8080/register";
 
         RestTemplate restTemplate = new RestTemplate();
 
