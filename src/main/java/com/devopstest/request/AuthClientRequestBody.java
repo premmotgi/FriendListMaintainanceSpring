@@ -2,11 +2,11 @@ package com.devopstest.request;
 
 
 /*
-{
-        "userName":"knemali",
-        "password": "sid",
-        "active": true
-        }
+    {
+            "userName":"knemali",
+            "password": "sid",
+            "active": true
+            }
 */
 public class AuthClientRequestBody {
 

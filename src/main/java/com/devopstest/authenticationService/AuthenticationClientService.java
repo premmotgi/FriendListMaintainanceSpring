@@ -2,6 +2,7 @@ package com.devopstest.authenticationService;
 
 import com.devopstest.request.AuthClientRequestBody;
 import com.devopstest.request.AuthLoginReqBody;
+import com.devopstest.response.AuthClientLoginFalseResponse;
 import com.devopstest.response.AuthClientLoginResponse;
 import com.devopstest.response.AuthClientResponse;
 import org.springframework.http.HttpEntity;
@@ -57,38 +58,84 @@ public class AuthenticationClientService {
 
         LOGGER.info("Client Authentication Login Started with request body"+requestBody);
 
-        final String uri = "http://localhost:8080/authenticate?reauthenticate=false";
-
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("Authorization", "Bearer "+requestBody.getJwt());
-
-        HttpEntity<AuthLoginReqBody> entity = new HttpEntity<>(requestBody, headers);
 
 
-        AuthClientLoginResponse result;
 
-        try {
-            result = restTemplate.postForObject(uri,entity,AuthClientLoginResponse.class);
+        if(requestBody.isAuthAgain()){
 
-        }catch (Exception e){
+            LOGGER.info("Client Authentication Login Started with request body for auth again "+true);
 
-            LOGGER.info("Request Failed");
-            return AuthClientLoginResponse.build("Something is messed up on Auth Client request didnt go throgh");
+            final String uri = "http://localhost:8080/authenticate?reauthenticate=true";
+
+            RestTemplate restTemplate = new RestTemplate();
+            HttpHeaders headers = new HttpHeaders();
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            headers.add("Authorization", "Bearer "+requestBody.getJwt());
+
+            HttpEntity<AuthLoginReqBody> entity = new HttpEntity<>(requestBody, headers);
+
+
+            AuthClientLoginResponse result = null;
+
+            try {
+
+                LOGGER.info("Client Call made for url"+uri);
+                result = restTemplate.postForObject(uri,entity,AuthClientLoginResponse.class);
+
+            }catch (Exception e){
+
+                LOGGER.info("Request Failed");
+                return AuthClientLoginResponse.build(null, "Error", "Error");
+
+
+            }
+            LOGGER.info("Client Authentication Login response body");
+
+            if(result != null){
+                LOGGER.info("Request successful"+result);
+                return result;
+
+            }
+
+            LOGGER.info("Request Failed"+result);
+            return AuthClientLoginResponse.build(null, "Error", "Error");
+
+
+        }else{
+
+            LOGGER.info("Client Authentication Login Started with request body for auth again "+false);
+
+            final String uri = "http://localhost:8080/authenticate?reauthenticate=false";
+
+            RestTemplate restTemplate = new RestTemplate();
+
+            AuthClientLoginResponse result;
+
+            try {
+                LOGGER.info("Client Call made for url"+uri);
+                result = restTemplate.postForObject(uri,requestBody,AuthClientLoginResponse.class);
+
+            }catch (Exception e){
+
+                LOGGER.info("Request Failed");
+                return AuthClientLoginResponse.build(null,"error","error");
+
+
+            }
+            LOGGER.info("Client Authentication Login response body");
+
+            if(result != null){
+                LOGGER.info("Request successful"+result);
+                return result;
+
+            }
+
+            LOGGER.info("Request Failed"+result);
+            return AuthClientLoginResponse.build(null,"error","error");
 
 
         }
-        LOGGER.info("Client Authentication Login response body");
 
-        if(result != null){
-            LOGGER.info("Request successful"+result);
-            return AuthClientLoginResponse.build(result.getJwt());
-
-        }
-
-        LOGGER.info("Request Failed"+result);
-        return AuthClientLoginResponse.build("Something is messed up on Auth Client");
 
 
     }

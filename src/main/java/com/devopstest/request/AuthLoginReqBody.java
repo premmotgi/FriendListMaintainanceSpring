@@ -2,6 +2,23 @@ package com.devopstest.request;
 
 public class AuthLoginReqBody {
 
+
+    public boolean isAuthAgain() {
+        return authAgain;
+    }
+
+    public void setAuthAgain(boolean authAgain) {
+        this.authAgain = authAgain;
+    }
+
+    public AuthLoginReqBody(boolean authAgain, String username, String password, String jwt) {
+        this.authAgain = authAgain;
+        this.username = username;
+        this.password = password;
+        this.jwt = jwt;
+    }
+
+    public boolean authAgain;
     public String username;
 
     public AuthLoginReqBody() {
