@@ -40,7 +40,7 @@ public class FriendController{
     GetAllFriendsService getAllFriendsResponse;
 
 
-    @GetMapping("/login")
+    @GetMapping("/login/v1")
     public LoginResponse greeting(@RequestParam(value = "name", defaultValue = "FriendUser") String name) throws Exception {
 
 

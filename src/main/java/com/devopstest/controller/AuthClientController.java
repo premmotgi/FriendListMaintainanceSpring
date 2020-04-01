@@ -22,7 +22,7 @@ public class AuthClientController {
     AuthenticationClientService authenticationClientService;
 
 
-    @PostMapping("/verifyMe")
+    @PostMapping("/login/v2")
     public AuthClientResponse greeting(@RequestBody AuthClientRequestBody requestBody) throws Exception {
 
 

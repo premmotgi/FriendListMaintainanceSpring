@@ -1,0 +1,171 @@
+{
+	"info": {
+		"_postman_id": "9f16e9f1-dbe4-42fe-8baf-88d0b02d3db5",
+		"name": "Friends API SpringBoot",
+		"description": "Backend API to get friends list",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CRUD",
+			"item": [
+				{
+					"name": "GET ALL FRIENDS",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/friends/all",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"friends",
+								"all"
+							]
+						},
+						"description": "Get the list of friends"
+					},
+					"response": []
+				},
+				{
+					"name": "GET FRIEND",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":123\n\t\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/friends/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"friends",
+								""
+							]
+						},
+						"description": "Get the friend by his ID"
+					},
+					"response": []
+				},
+				{
+					"name": "POST FRIEND",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"friend\" :{\n\t\t\"id\":1392,\n\t\t\"name\":\"abdul\",\n\t\t\"authorised\":true\n\n\t},\n\t\"token\":\"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{URL}}/friends/",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"friends",
+								""
+							]
+						},
+						"description": "Add a new friend to database"
+					},
+					"response": []
+				},
+				{
+					"name": "UPDATE FRIEND",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"friend\" :{\n\t\t\"id\":1392,\n\t\t\"name\":\"abdul\",\n\t\t\"authorised\":true\n\n\t},\n\t\"token\":\"\"\n}"
+						},
+						"url": {
+							"raw": "{{URL}}/friends/5e312dbd7a55fc459c453adf",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"friends",
+								"5e312dbd7a55fc459c453adf"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE FRIEND",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/v1/friends/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"friends",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{URL}}/friends/login?name=prem",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"friends",
+								"login"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "prem"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
