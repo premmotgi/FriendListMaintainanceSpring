@@ -24,7 +24,7 @@ public class AuthenticationClientService {
 
         LOGGER.info("Client Authentication Started with request body"+requestBody);
 
-        final String uri = "http://localhost:8080/register";
+        final String uri = "http://3.101.42.211:8080/register";
 
         RestTemplate restTemplate = new RestTemplate();
 
@@ -65,7 +65,7 @@ public class AuthenticationClientService {
 
             LOGGER.info("Client Authentication Login Started with request body for auth again "+true);
 
-            final String uri = "http://localhost:8080/authenticate?reauthenticate=true";
+            final String uri = "http://3.101.42.211:8080/authenticate?reauthenticate=true";
 
             RestTemplate restTemplate = new RestTemplate();
             HttpHeaders headers = new HttpHeaders();
@@ -105,7 +105,7 @@ public class AuthenticationClientService {
 
             LOGGER.info("Client Authentication Login Started with request body for auth again "+false);
 
-            final String uri = "http://localhost:8080/authenticate?reauthenticate=false";
+            final String uri = "http://3.101.42.211:8080/authenticate?reauthenticate=false";
 
             RestTemplate restTemplate = new RestTemplate();
 
