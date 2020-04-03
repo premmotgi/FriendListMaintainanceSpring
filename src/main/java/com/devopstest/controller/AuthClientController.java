@@ -5,9 +5,11 @@ import com.devopstest.authenticationService.AuthenticationClientService;
 import com.devopstest.dao.Friend;
 import com.devopstest.request.AuthClientRequestBody;
 import com.devopstest.request.AuthLoginReqBody;
+import com.devopstest.request.UpdatePasswordRequestBody;
 import com.devopstest.response.AuthClientLoginResponse;
 import com.devopstest.response.AuthClientResponse;
 import com.devopstest.response.LoginResponse;
+import com.devopstest.response.UpdatePasswordResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +52,14 @@ public class AuthClientController {
     }
 
 
+    @PutMapping("/v1/password")
+    public UpdatePasswordResponse register(@RequestBody UpdatePasswordRequestBody requestBody) throws Exception {
+
+        LOGGER.info("Authentication Client update password request started with "+requestBody);
+        UpdatePasswordResponse response =  authenticationClientService.executeUpdatePassword(requestBody);
+        LOGGER.info("Authentication client update password ending with Response :" +response.toString());
+        return  response;
+
+    }
 
 }

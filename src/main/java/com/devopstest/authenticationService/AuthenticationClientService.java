@@ -2,9 +2,13 @@ package com.devopstest.authenticationService;
 
 import com.devopstest.request.AuthClientRequestBody;
 import com.devopstest.request.AuthLoginReqBody;
+import com.devopstest.request.UpdatePasswordRequestBody;
 import com.devopstest.response.AuthClientLoginFalseResponse;
 import com.devopstest.response.AuthClientLoginResponse;
 import com.devopstest.response.AuthClientResponse;
+import com.devopstest.response.UpdatePasswordResponse;
+import com.devopstest.util.PasswordUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +24,10 @@ public class AuthenticationClientService {
 
     private static final Logger LOGGER = Logger.getLogger(AuthenticationClientService.class.getName());
 
+
+    @Autowired
+    PasswordUtil passwordUtil;
+
     public AuthClientResponse execute(AuthClientRequestBody requestBody){
 
         LOGGER.info("Client Authentication Started with request body"+requestBody);
@@ -31,6 +39,8 @@ public class AuthenticationClientService {
         String result ="";
 
         try {
+
+            requestBody.setPassword(passwordUtil.encrypt(requestBody.getPassword()));
              result = restTemplate.postForObject(uri, requestBody,String.class);
 
         }catch (Exception e){
@@ -132,6 +142,41 @@ public class AuthenticationClientService {
 
             LOGGER.info("Request Failed"+result);
             return AuthClientLoginResponse.build(null,"error","error");
+
+
+        }
+
+
+
+    }
+
+
+
+    public UpdatePasswordResponse executeUpdatePassword(UpdatePasswordRequestBody requestBody){
+
+
+        LOGGER.info("Client Authentication- executeUpdatePassword Started with request body for auth again "+false);
+
+        final String uri = "http://localhost:8080/updatePassword";
+
+        RestTemplate restTemplate = new RestTemplate();
+
+
+        UpdatePasswordResponse result;
+        try {
+
+            LOGGER.info("Client Call made for url"+uri);
+            requestBody.setNewPassword(passwordUtil.encrypt(requestBody.getNewPassword()));
+            requestBody.setOldPassword(passwordUtil.encrypt(requestBody.getOldPassword()));
+            result = restTemplate.patchForObject(uri,requestBody,UpdatePasswordResponse.class);
+            LOGGER.info("Client Authentication- executeUpdatePassword Response"+result);
+            return result;
+
+
+        }catch (Exception e){
+
+            LOGGER.info("Request Failed");
+            return UpdatePasswordResponse.build(requestBody.getId(),HttpStatus.INTERNAL_SERVER_ERROR.toString());
 
 
         }
