@@ -9,10 +9,7 @@ import com.devopstest.response.AuthClientResponse;
 import com.devopstest.response.UpdatePasswordResponse;
 import com.devopstest.util.PasswordUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -153,36 +150,20 @@ public class AuthenticationClientService {
 
 
     public UpdatePasswordResponse executeUpdatePassword(UpdatePasswordRequestBody requestBody){
-
-
-        LOGGER.info("Client Authentication- executeUpdatePassword Started with request body for auth again "+false);
-
+        LOGGER.info("Client Authentication- executeUpdatePassword Started with request body for auth again "+requestBody);
         final String uri = "http://localhost:8080/updatePassword";
-
         RestTemplate restTemplate = new RestTemplate();
-
-
         UpdatePasswordResponse result;
         try {
-
             LOGGER.info("Client Call made for url"+uri);
             requestBody.setNewPassword(passwordUtil.encrypt(requestBody.getNewPassword()));
-            requestBody.setOldPassword(passwordUtil.encrypt(requestBody.getOldPassword()));
-            result = restTemplate.patchForObject(uri,requestBody,UpdatePasswordResponse.class);
+            LOGGER.info("new pass"+requestBody.getNewPassword());
+            result = restTemplate.postForObject(uri,requestBody,UpdatePasswordResponse.class);
             LOGGER.info("Client Authentication- executeUpdatePassword Response"+result);
-            return result;
-
-
+            return  result;
         }catch (Exception e){
-
-            LOGGER.info("Request Failed");
+            LOGGER.info("Request Failed" + e.getMessage());
             return UpdatePasswordResponse.build(requestBody.getId(),HttpStatus.INTERNAL_SERVER_ERROR.toString());
-
-
         }
-
-
-
     }
-
 }

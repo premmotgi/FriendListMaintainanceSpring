@@ -52,7 +52,7 @@ public class AuthClientController {
     }
 
 
-    @PatchMapping("/v1/password")
+    @PostMapping("/v1/password")
     public UpdatePasswordResponse register(@RequestBody UpdatePasswordRequestBody requestBody) throws Exception {
 
         LOGGER.info("Authentication Client update password request started with "+requestBody);
